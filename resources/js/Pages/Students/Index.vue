@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, usePage } from "@inertiajs/vue3";
+import { Head, usePage, Link } from "@inertiajs/vue3";
 import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
@@ -15,7 +15,7 @@ console.log(usePage().props.students);
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Student All" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -23,9 +23,12 @@ console.log(usePage().props.students);
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     All Student
                 </h2>
-                <button class="px-3 py-2 text-white bg-indigo-600 rounded-md">
+                <Link
+                    :href="route('students.create')"
+                    class="px-3 py-2 text-white bg-indigo-600 rounded-md"
+                >
                     Add Student
-                </button>
+                </Link>
             </div>
         </template>
 
