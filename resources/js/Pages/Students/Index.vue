@@ -94,11 +94,16 @@ console.log(usePage().props.students);
                                         {{ student.created_at }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a
-                                            href="#"
+                                        <Link
+                                            :href="
+                                                route(
+                                                    'students.edit',
+                                                    student.id
+                                                )
+                                            "
                                             class="mr-2 font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                             >Edit
-                                        </a>
+                                        </Link>
                                         <a
                                             href="#"
                                             class="font-medium text-red-600 dark:text-red-500 hover:underline"

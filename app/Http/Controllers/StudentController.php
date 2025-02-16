@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Api\StudentStoreRequest;
+use App\Http\Requests\Api\StudentUpdateRequest;
 use App\Http\Resources\ClassesResource;
 use App\Http\Resources\SectionResource;
 use App\Http\Resources\StudentResource;
@@ -62,15 +63,25 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        $classes = ClassesResource::collection(Classes::all());
+        return inertia('Students/Edit', [
+            'student' => new StudentResource($student),
+            'classes' => $classes,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(StudentUpdateRequest $request, Student $student)
     {
-        //
+        $student->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'classes_id' => $request->class_id,
+            'section_id' => $request->section_id,
+        ]);
+        return redirect()->route('students.index');
     }
 
     /**
