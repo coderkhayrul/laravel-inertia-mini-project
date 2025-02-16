@@ -1,4 +1,5 @@
 <script setup>
+import InputError from "@/Components/InputError.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
@@ -36,6 +37,10 @@ const getSections = (classId) => {
             console.log(error.response.data);
         });
 };
+
+const createStudent = () => {
+    form.post(route("students.store"));
+};
 </script>
 
 <template>
@@ -60,7 +65,7 @@ const getSections = (classId) => {
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <form>
+                        <form @submit.prevent="createStudent">
                             <div class="mb-4">
                                 <label
                                     for="name"
@@ -70,14 +75,15 @@ const getSections = (classId) => {
                                 >
                                 <input
                                     type="text"
-                                    class="w-full px-3 py-2 leading-tight text-gray-700 border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                    class="w-full px-3 py-2 leading-tight text-gray-700 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                     placeholder="Enter Name"
                                     id="name"
                                     v-model="form.name"
                                 />
-                                <span class="ml-2 text-sm text-red-500"
-                                    >Error Message
-                                </span>
+                                <InputError
+                                    :message="form.errors.name"
+                                    class="mt-2"
+                                />
                             </div>
                             <div class="mb-4">
                                 <label
@@ -88,14 +94,15 @@ const getSections = (classId) => {
                                 >
                                 <input
                                     type="email"
-                                    class="w-full px-3 py-2 leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                    class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                     placeholder="Enter Email"
                                     id="email"
                                     v-model="form.email"
                                 />
-                                <span class="ml-2 text-sm text-red-500"
-                                    >Error Message
-                                </span>
+                                <InputError
+                                    :message="form.errors.email"
+                                    class="mt-2"
+                                />
                             </div>
                             <div class="mb-4">
                                 <label
@@ -105,7 +112,7 @@ const getSections = (classId) => {
                                     Class:</label
                                 >
                                 <select
-                                    class="w-full px-3 py-2 leading-tight text-gray-700 border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                    class="w-full px-3 py-2 leading-tight text-gray-700 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                     id="class_id"
                                     v-model="form.class_id"
                                 >
@@ -117,9 +124,10 @@ const getSections = (classId) => {
                                         {{ item.name }}
                                     </option>
                                 </select>
-                                <span class="ml-2 text-sm text-red-500"
-                                    >Error Message
-                                </span>
+                                <InputError
+                                    :message="form.errors.class_id"
+                                    class="mt-2"
+                                />
                             </div>
 
                             <div class="mb-4">
@@ -130,7 +138,7 @@ const getSections = (classId) => {
                                     Section:</label
                                 >
                                 <select
-                                    class="w-full px-3 py-2 leading-tight text-gray-700 border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                    class="w-full px-3 py-2 leading-tight text-gray-700 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                     id="section_id"
                                     v-model="form.section_id"
                                 >
@@ -143,9 +151,10 @@ const getSections = (classId) => {
                                         {{ section.name }}
                                     </option>
                                 </select>
-                                <span class="ml-2 text-sm text-red-500"
-                                    >Error Message
-                                </span>
+                                <InputError
+                                    :message="form.errors.section_id"
+                                    class="mt-2"
+                                />
                             </div>
 
                             <button
