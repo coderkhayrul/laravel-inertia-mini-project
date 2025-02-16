@@ -13,8 +13,7 @@ class SectionController extends Controller
     public function __invoke(ListSectionRequest $request)
     {
 
-        return "Success";
-        $sections = Section::where('class_id', $request->class_id)->get();
+        $sections = Section::where('classes_id', $request->class_id)->get();
         return SectionResource::collection($sections);
     }
 }

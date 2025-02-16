@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import { watch } from "vue";
+import { ref, watch } from "vue";
 
 defineProps({
     classes: {
@@ -17,6 +17,8 @@ const form = useForm({
     section_id: "",
 });
 
+let sections = ref([]);
+
 watch(
     () => form.class_id,
     (newValue) => {
@@ -28,7 +30,7 @@ const getSections = (classId) => {
     axios
         .get("/api/sections?class_id=" + classId)
         .then((response) => {
-            console.log(response.data);
+            sections.value = response.data;
         })
         .catch((error) => {
             console.log(error.response.data);
@@ -133,6 +135,13 @@ const getSections = (classId) => {
                                     v-model="form.section_id"
                                 >
                                     <option value="">Select Section</option>
+                                    <option
+                                        v-for="section in sections.data"
+                                        :key="section.id"
+                                        :value="section.id"
+                                    >
+                                        {{ section.name }}
+                                    </option>
                                 </select>
                                 <span class="ml-2 text-sm text-red-500"
                                     >Error Message
