@@ -65,8 +65,8 @@ class StudentController extends Controller
     {
         $classes = ClassesResource::collection(Classes::all());
         return inertia('Students/Edit', [
-            'student' => new StudentResource($student),
             'classes' => $classes,
+            'student' => new StudentResource($student),
         ]);
     }
 

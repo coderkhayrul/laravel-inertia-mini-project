@@ -15,7 +15,7 @@ defineProps({
     },
 });
 
-let sections = ref([]);
+let sections = ref({});
 let student = usePage().props.student.data;
 
 const form = useForm({
@@ -32,20 +32,21 @@ watch(
     }
 );
 
-onMounted(() => {
-    getSections(form.class_id);
-});
-
 const getSections = (classId) => {
     axios
         .get("/api/sections?class_id=" + classId)
         .then((response) => {
-            sections.value = response.data;
+            let ff = (sections.value = response.data);
         })
         .catch((error) => {
             console.log(error.response.data);
         });
 };
+
+onMounted(() => {
+    getSections(form.class_id);
+    console.log(student);
+});
 
 const updateStudent = () => {
     form.put(route("students.update", student.id));
